@@ -1,23 +1,60 @@
-import logo from './logo.svg';
+import React, { useState } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 function App() {
+  const [value, setValue] = useState("");
+
+  const handleClick = (val) => {
+    if (val === "=") {
+      try {
+        setValue(eval(value).toString());
+      } catch {
+        setValue("Error");
+      }
+    } else if (val === "C") {
+      setValue("");
+    } else {
+      setValue(value + val);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container text-center mt-5">
+      <h1 className="mb-4 fw-bold">React Calculator</h1>
+      <div className="card p-4 shadow-lg mx-auto" style={{ maxWidth: "320px" }}>
+        <input
+          type="text"
+          className="form-control text-end mb-3"
+          value={value}
+          readOnly
+        />
+        {[
+          ["7", "8", "9", "/"],
+          ["4", "5", "6", "*"],
+          ["1", "2", "3", "-"],
+          ["0", ".", "=", "+"],
+          ["C"]
+        ].map((row, i) => (
+          <div key={i} className="d-flex gap-2 mb-2">
+            {row.map((btn) => (
+              <button
+                key={btn}
+                className={`btn ${
+                  btn === "="
+                    ? "btn-success flex-fill"
+                    : btn === "C"
+                    ? "btn-danger flex-fill"
+                    : "btn-secondary flex-fill"
+                }`}
+                onClick={() => handleClick(btn)}
+              >
+                {btn}
+              </button>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
