@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import "./Calculator.css"
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./Calculator.css";
 
-export default function Calculator () {
+export default function Calculator() {
   const [value, setValue] = useState("");
 
   const handleClick = (val) => {
     if (val === "=") {
       try {
+        // eslint-disable-next-line no-eval
         setValue(eval(value).toString());
       } catch {
         setValue("Error");
@@ -29,12 +30,13 @@ export default function Calculator () {
           value={value}
           readOnly
         />
+
         {[
           ["7", "8", "9", "/"],
           ["4", "5", "6", "*"],
           ["1", "2", "3", "-"],
           ["0", ".", "=", "+"],
-          ["C"]
+          ["C"],
         ].map((row, i) => (
           <div key={i} className="d-flex gap-2 mb-2">
             {row.map((btn) => (
@@ -58,5 +60,3 @@ export default function Calculator () {
     </div>
   );
 }
-
-
